@@ -248,15 +248,15 @@ sed -i 's/拦截DNS服务器/拦截DNS服务器（默认用户名和密码均为
 
 # 5G通信模组拨号工具
 mkdir quectel_QMI_WWAN
-# mkdir fibocom_QMI_WWAN
-# mkdir meig_QMI_WWAN
+mkdir fibocom_QMI_WWAN
+mkdir meig_QMI_WWAN
 mkdir tw_QMI_WWAN
 mkdir quectel_cm_5G
 mkdir quectel_MHI
 # mkdir luci-app-hypermodem
 cp -rf ../../Modem-Support/quectel_QMI_WWAN/* quectel_QMI_WWAN
-# cp -rf ../../Modem-Support/fibocom_QMI_WWAN/* fibocom_QMI_WWAN
-# cp -rf ../../Modem-Support/meig_QMI_WWAN/* meig_QMI_WWAN
+cp -rf ../../Modem-Support/fibocom_QMI_WWAN/* fibocom_QMI_WWAN
+cp -rf ../../Modem-Support/meig_QMI_WWAN/* meig_QMI_WWAN
 cp -rf ../../Modem-Support/tw_QMI_WWAN/* tw_QMI_WWAN
 cp -rf ../../Modem-Support/quectel_cm_5G/* quectel_cm_5G
 cp -rf ../../Modem-Support/quectel_MHI/* quectel_MHI
@@ -483,10 +483,10 @@ CONFIG_PACKAGE_luci-app-sms-tool=y
 # CONFIG_PACKAGE_sendat=y
 CONFIG_PACKAGE_sms-tool=y
 CONFIG_PACKAGE_luci-app-modem=y
-# CONFIG_PACKAGE_kmod-qmi_wwan_q=y
+CONFIG_PACKAGE_kmod-qmi_wwan_q=y
 # CONFIG_PACKAGE_kmod-qmi_wwan_f=y
 # CONFIG_PACKAGE_kmod-qmi_wwan_m=y
-CONFIG_PACKAGE_kmod-qmi_wwan_t=y
+# CONFIG_PACKAGE_kmod-qmi_wwan_t=y
 
 # QMI拨号工具（移远，广和通）
 # CONFIG_PACKAGE_quectel-CM-5G=y
