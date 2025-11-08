@@ -141,7 +141,7 @@ jobs:
         [ -e $CONFIG_FILE_PATH ] && mv $CONFIG_FILE_PATH openwrt/$CONFIG_FILE
         chmod +x $DIY_P2_SH
         cd openwrt
-        $GITHUB_WORKSPACE/$DIY_P2_SH ${{ matrix.ARCHITECTURE }}
+        $GITHUB_WORKSPACE/$DIY_P2_SH ${{ matrix.REPO_BRANCH }} ${{ matrix.ARCHITECTURE }}
 
     - name: 设置LAN IP地址（路由器登录地址）
       run: |

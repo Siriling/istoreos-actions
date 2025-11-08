@@ -191,17 +191,19 @@ cp -rf ../../kiddin9/luci-app-rtbwmon/* luci-app-rtbwmon
 #VSSR（Hello Word）
 # svn export https://github.com/jerrykuku/lua-maxminddb/trunk lua-maxminddb
 # svn export https://github.com/jerrykuku/luci-app-vssr/trunk luci-app-vssr
-#OpenClash
-mkdir luci-app-openclash
-cp -rf ../../kiddin9/luci-app-openclash/* luci-app-openclash
-cp -rf ../../MyConfig/configs/istoreos/general/applications/luci-app-openclash/* luci-app-openclash
+if [ "$1" = "istoreos-22.03" ]; then
+    #OpenClash
+    mkdir luci-app-openclash
+    cp -rf ../../kiddin9/luci-app-openclash/* luci-app-openclash
+    cp -rf ../../MyConfig/configs/istoreos/general/applications/luci-app-openclash/* luci-app-openclash
+fi
 #加入OpenClash核心
 chmod -R a+x $GITHUB_WORKSPACE/scripts/preset-clash-core.sh
-if [ "$1" = "rk33xx" ]; then
+if [ "$2" = "rk33xx" ] || [ "$2" = "rk33xx-23.05" ] || [ "$2" = "rk33xx-24.10" ]; then
     $GITHUB_WORKSPACE/scripts/preset-clash-core.sh arm64
-elif [ "$1" = "rk35xx" ]; then
+elif [ "$2" = "rk35xx" ] || [ "$2" = "rk35xx-23.05" ] || [ "$2" = "rk35xx-24.10" ]; then
     $GITHUB_WORKSPACE/scripts/preset-clash-core.sh arm64
-elif [ "$1" = "x86" ]; then
+elif [ "$2" = "x86" ] || [ "$2" = "x86-23.05" ] || [ "$2" = "x86-24.10" ]; then
     $GITHUB_WORKSPACE/scripts/preset-clash-core.sh amd64
 fi
 
