@@ -20,24 +20,24 @@ jobs:
         wget -O  ./rk33xx/.config https://fw0.koolcenter.com/iStoreOS-22.03/r2s/config.buildinfo
 
         mkdir -p ./rk33xx-24.10
-        wget -O  ./rk33xx-24.10/feeds.conf https://fw0.koolcenter.com/iStoreOS/alpha/24.10/r2s/feeds.conf
-        wget -O  ./rk33xx-24.10/.config https://fw0.koolcenter.com/iStoreOS/alpha/24.10/r2s/config.buildinfo
+        wget -O  ./rk33xx-24.10/feeds.conf https://fw0.koolcenter.com/iStoreOS/r2s/feeds.conf
+        wget -O  ./rk33xx-24.10/.config https://fw0.koolcenter.com/iStoreOS/r2s/config.buildinfo
 
         mkdir -p ./rk35xx
         wget -O ./rk35xx/feeds.conf https://fw0.koolcenter.com/iStoreOS-22.03/h88k/feeds.conf
         wget -O ./rk35xx/.config https://fw0.koolcenter.com/iStoreOS-22.03/h88k/config.buildinfo
 
         mkdir -p ./rk35xx-24.10
-        wget -O ./rk35xx-24.10/feeds.conf https://fw0.koolcenter.com/iStoreOS/alpha/24.10/h88k/feeds.conf
-        wget -O ./rk35xx-24.10/.config https://fw0.koolcenter.com/iStoreOS/alpha/24.10/h88k/config.buildinfo
+        wget -O ./rk35xx-24.10/feeds.conf https://fw0.koolcenter.com/iStoreOS/h88k/feeds.conf
+        wget -O ./rk35xx-24.10/.config https://fw0.koolcenter.com/iStoreOS/h88k/config.buildinfo
 
         mkdir -p ./x86
         wget -O ./x86/feeds.conf https://fw0.koolcenter.com/iStoreOS-22.03/x86_64_efi/feeds.conf
         wget -O ./x86/.config https://fw0.koolcenter.com/iStoreOS-22.03/x86_64_efi/config.buildinfo
 
         mkdir -p ./x86-24.10
-        wget -O ./x86-24.10/feeds.conf https://fw0.koolcenter.com/iStoreOS/alpha/24.10/x86_64_efi/feeds.conf
-        wget -O ./x86-24.10/.config https://fw0.koolcenter.com/iStoreOS/alpha/24.10/x86_64_efi/config.buildinfo
+        wget -O ./x86-24.10/feeds.conf https://fw0.koolcenter.com/iStoreOS/x86_64_efi/feeds.conf
+        wget -O ./x86-24.10/.config https://fw0.koolcenter.com/iStoreOS/x86_64_efi/config.buildinfo
 
     - name: 同步配置
       uses: peaceiris/actions-gh-pages@v3
