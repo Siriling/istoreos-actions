@@ -191,12 +191,12 @@ cp -rf ../../kiddin9/luci-app-rtbwmon/* luci-app-rtbwmon
 #VSSR（Hello Word）
 # svn export https://github.com/jerrykuku/lua-maxminddb/trunk lua-maxminddb
 # svn export https://github.com/jerrykuku/luci-app-vssr/trunk luci-app-vssr
-# if [ "$1" = "istoreos-22.03" ]; then
+if [ "$1" = "istoreos-22.03" ]; then
     #OpenClash
     mkdir luci-app-openclash
     cp -rf ../../kiddin9/luci-app-openclash/* luci-app-openclash
     cp -rf ../../MyConfig/configs/istoreos/general/applications/luci-app-openclash/* luci-app-openclash
-# fi
+fi
 #加入OpenClash核心
 chmod -R a+x $GITHUB_WORKSPACE/scripts/preset-clash-core.sh
 if [ "$2" = "rk33xx" ] || [ "$2" = "rk33xx-23.05" ] || [ "$2" = "rk33xx-24.10" ]; then
