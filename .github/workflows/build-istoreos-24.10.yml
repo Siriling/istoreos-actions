@@ -89,10 +89,8 @@ jobs:
         echo "------------------------------- 更新并安装依赖 -------------------------------"
         sudo -E apt-get -qq update
         sudo -E apt-get -qq install $(cat $GITHUB_WORKSPACE/depends/${{ matrix.os }})
-        wget https://bootstrap.pypa.io/pip/3.6/get-pip.py
-        sudo python3 get-pip.py
-        sudo rm -rf get-pip.py
-        sudo pip install pyelftools
+        sudo pip3 install --upgrade pip
+        sudo pip3 install pyelftools
         echo "------------------------------- 清理Docker镜像和软件 -------------------------------"
         docker rmi `docker images -q`
         docker image prune -a -f
