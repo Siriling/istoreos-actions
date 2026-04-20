@@ -7,7 +7,7 @@ on:
       lan_ip:
         description: '设置LAN IP地址'
         required: true
-        default: '192.168.10.1'
+        default: '192.168.1.1'
       os_name:
         description: '设置系统名称'
         required: true
@@ -36,7 +36,10 @@ env:
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
-  GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+  # ✅ 修复1: 移除顶层 env 中的 GITHUB_TOKEN，避免权限冲突导致 403
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -147,7 +150,6 @@ jobs:
         if [ -z "$SET_IP" ]; then
             SET_IP="192.168.10.1"
         fi
-        #修改默认IP地址
         sed -i "s/192\.168\.[0-9]*\.[0-9]*/$SET_IP/g" package/base-files/files/bin/config_generate
         echo "Set LAN IP Address: $SET_IP"
 
@@ -190,7 +192,8 @@ jobs:
         echo -e "$(nproc) thread compile"
         make -j$(nproc) || make -j1 || make -j1 V=s
         echo "FILE_DATE=_$(date +"%Y%m%d%H%M")" >> $GITHUB_ENV
-        echo "::set-output name=status::success"
+        # ✅ 修复2: 使用新语法替代废弃的 set-output
+        echo "status=success" >> $GITHUB_OUTPUT
 
     - name: 检查磁盘空间
       if: (!cancelled())
@@ -210,7 +213,8 @@ jobs:
         cd openwrt/bin/targets/*/*
         rm -rf packages
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
-        echo "::set-output name=status::success"
+        # ✅ 修复3: 使用新语法替代废弃的 set-output
+        echo "status=success" >> $GITHUB_OUTPUT
 
     - name: 上传固件目录
       uses: actions/upload-artifact@main
@@ -223,7 +227,8 @@ jobs:
       id: tag
       if: steps.compile.outputs.status == 'success' && env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "::set-output name=release_tag::${{ matrix.ARCHITECTURE }}"
+        # ✅ 修复4: 使用新语法替代废弃的 set-output
+        echo "release_tag=${{ matrix.ARCHITECTURE }}" >> $GITHUB_OUTPUT
         SET_IP=${{ github.event.inputs.lan_ip }}
         if [ -z "$SET_IP" ]; then
             SET_IP="192.168.10.1"
@@ -245,22 +250,29 @@ jobs:
         🔒 密码: password
 
         📒 说明: 单网口设备默认网口为LAN（旁路由模式），需要接入主路由器后进后台查找对应IP地址访问。双网口及以上设备，默认网口为WAN+LAN（主路由模式），接入LAN可直接访问" >> release.txt
-        echo "::set-output name=status::success"
+        # ✅ 修复5: 使用新语法替代废弃的 set-output
+        echo "status=success" >> $GITHUB_OUTPUT
 
     - name: 自动发布固件到 Releases
       uses: softprops/action-gh-release@v1
       if: steps.tag.outputs.status == 'success' && !cancelled()
+      # ✅ 修复6: 在步骤级别声明 GITHUB_TOKEN，避免顶层 env 导致的 403 权限错误
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
         tag_name: ${{ steps.tag.outputs.release_tag }}
         body_path: release.txt
         files: ${{ env.FIRMWARE }}/*
+        # ✅ 修复7: 允许覆盖已存在的同名 tag，避免重复触发时 403
+        overwrite: true
 
     - name: 删除运行记录
       uses: GitRML/delete-workflow-runs@main
       with:
         retain_days: 1
         keep_minimum_runs: 3
-        token: ${{ env.GITHUB_TOKEN }}
+        # ✅ 修复8: token 使用标准写法
+        token: ${{ secrets.GITHUB_TOKEN }}
 
     - name: 删除自动发布的旧固件
       uses: dev-drprasad/delete-older-releases@v0.1.0
@@ -268,3 +280,6 @@ jobs:
       with:
         keep_latest: 6
         delete_tags: true
+      env:
+        # ✅ 修复9: 在步骤级别声明 GITHUB_TOKEN
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
