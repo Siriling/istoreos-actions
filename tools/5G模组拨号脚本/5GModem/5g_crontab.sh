@@ -1,6 +1,6 @@
 #!/bin/bash
 
-step=2 #间隔的秒数，不能大于60
+step=20 #间隔的秒数，不能大于60
 name="5g_start.sh" #程序文件名
 path="/root/5GModem/" #程序路径
 pid=`ps -A |grep $name| awk '{print $1}'` #程序的pid
